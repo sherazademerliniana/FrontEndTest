@@ -1,10 +1,15 @@
-import GlobalStyle from "./styles/globalStyle";
+import { FormPage } from "./components/Form";
+import { ListData } from "./components/List";
+import GlobalStyle, { ContainerPages } from "./styles/globalStyle";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <h1> Teste</h1>
+      <ContainerPages>
+        <FormPage />
+        <ListData />
+      </ContainerPages>
     </>
   );
 }

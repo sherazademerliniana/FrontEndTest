@@ -1,17 +1,20 @@
-import { StyledForm } from "../../styles/Form";
 import { Input } from "../Input/style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ButtonStyled } from "../Button/style";
+import { StyledForm } from "./style";
+import { useContext } from "react";
+import { ChallengeContext } from "../../providers/Challenge";
 
-export const FormRegister = () => {
-
+export const FormPage = () => {
   const schema = yup.object().shape({
-    amount: yup.number().required("Required field"),
-    installments: yup.number().required("Required field"),
-    mdr: yup.number().required("Required field"),
+    amount: yup.number().required("Required Field"),
+    installments: yup.number().required("Required Field"),
+    mdr: yup.number().required("Required Field"),
   });
+
+  const { postChallenge } = useContext(ChallengeContext);
 
   const {
     register,
@@ -19,49 +22,58 @@ export const FormRegister = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema), reValidateMode: "onSubmit" });
 
-
-  const onSubmit = async (data_user) => {
-  
+  const resetInput = () => {
+    Array.from(document.querySelectorAll("input")).forEach(
+      (input) => (input.value = "")
+    );
+  };
+  const onSubmit = async (data) => {
+    await postChallenge(data);
+    resetInput();
   };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Input
-        label="Full Name"
-        placeholder="Maria da Silva"
-        type="text"
+        label="Informe o valor da venda *"
+        placeholder=""
+        type="number"
         register={register}
-        name="full_name"
-        error={errors?.full_name?.message}
+        name="amount"
+        min="1000"
+        error={errors?.amount?.message}
       />
 
       <Input
-        label="Email"
-        placeholder="Maria@hotmail.com"
-        type="text"
+        label="Em quantas parcelas *"
+        placeholder=""
+        type="number"
         register={register}
-        name="email"
-        error={errors?.email?.message}
+        name="installments"
+        min="1"
+        max="12"
+        error={errors?.installments?.message}
       />
 
       <Input
-        label="Telephone"
-        placeholder="991111111"
-        type="text"
+        label="Informe o percentual de MDR *"
+        placeholder=""
+        type="number"
         register={register}
-        name="telephone"
-        error={errors?.telephone?.message}
+        name="mdr"
+        min="0"
+        error={errors?.mdr?.message}
       />
       <ButtonStyled
-        backgroundcolor="var(--grey)"
-        width="94%"
+        backgroundcolor="white"
+        width="50%"
         padding=".3rem"
         type="submit"
-        hover="var(--grey-2)"
-        color="var(--grey-2)"
-        hovercolor="var(--grey)"
+        hover="black"
+        color="black"
+        hovercolor="white"
       >
-        Registrar
+        Enviar
       </ButtonStyled>
     </StyledForm>
   );

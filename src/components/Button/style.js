@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Button } from "./index.jsx";
 
 export const ButtonStyled = styled(Button)`
@@ -13,6 +13,7 @@ export const ButtonStyled = styled(Button)`
   padding: ${(props) => props.padding};
   font-weight: 500;
   font-family: "Inter", sans-serif;
+  margin-top: 10px;
   &:hover {
     background-color: ${(props) => props.hover};
     border: 0.3rem solid ${(props) => props.hover};

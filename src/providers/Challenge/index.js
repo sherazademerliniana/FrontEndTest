@@ -10,7 +10,7 @@ export const ChallengeProvider = ({ children }) => {
     api
       .post("", data)
       .then((res) => {
-        setCalc(res);
+        setCalc(res.data);
       })
       .catch((err) => {
         console.log(err);
